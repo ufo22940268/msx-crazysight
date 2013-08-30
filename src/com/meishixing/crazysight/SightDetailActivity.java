@@ -53,7 +53,7 @@ public class SightDetailActivity extends FragmentActivity {
         mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
         mIndicator.setViewPager(mPager);
 
-        FragmentPagerAdapter adapter = new GoogleMusicAdapter(getSupportFragmentManager());
+        FragmentPagerAdapter adapter = new ContentAdapter(getSupportFragmentManager());
 
         ViewPager pager = (ViewPager)findViewById(R.id.content_pager);
         pager.setAdapter(adapter);
@@ -112,14 +112,18 @@ public class SightDetailActivity extends FragmentActivity {
         }
     }
 
-    private class GoogleMusicAdapter extends FragmentPagerAdapter {
-        public GoogleMusicAdapter(FragmentManager fm) {
+    private class ContentAdapter extends FragmentPagerAdapter {
+        public ContentAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
-            return ContentFragment.newInstance(position);
+            if (position == 0) {
+                return new TicketFragment();
+            } else {
+                return ContentFragment.newInstance(position);
+            }
         }
 
         @Override
