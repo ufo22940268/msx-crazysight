@@ -5,6 +5,9 @@
     <color name="green">#9fcb5b</color>
     <color name="msx_dialog_bg">#fff</color>
 
+    <color name="expandable_top">#f6f5f3</color>
+    <color name="expandable_bottom">#efefef</color>
+
     <drawable name="orange">#ff7f66</drawable>
     <drawable name="dim_orange">#884236</drawable>
 

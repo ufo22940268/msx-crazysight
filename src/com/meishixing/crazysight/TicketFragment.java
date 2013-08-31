@@ -9,9 +9,25 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.*;
+import android.util.*;
+import android.widget.*;
+import android.view.*;
+import android.content.*;
+import android.content.res.*;
+import android.app.*;
+import android.os.*;
+import android.database.*;
+import android.net.*;
+import android.opengl.*;
+import android.graphics.*;
+import android.view.animation.*;
+import android.text.TextUtils;
+
+import java.util.*;
 
 import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
 import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
+import com.meishixing.crazysight.widget.*;
 
 public final class TicketFragment extends Fragment {
 
@@ -65,6 +81,31 @@ public final class TicketFragment extends Fragment {
                 } else {
                     view = inflater.inflate(R.layout.list_item_ticket, parent, false);
                 }
+            }
+
+            if (type == TYPE_TICKET) {
+                final View fixedView = view.findViewById(R.id.expandable_toggle_button);
+                final View expandableView = view.findViewById(R.id.expandable);
+                ((ExpandableLayout)view.findViewById(R.id.expandable_toggle_button)).setOnExpandListener(new View.OnClickListener() {
+
+                    private boolean mIsExpanded;
+
+                    @Override
+                    public void onClick(View view) {
+                        //Change background color.
+                        Resources res = getActivity().getResources();
+                        int topColor = res.getColor(R.color.expandable_top);
+                        int bottomColor = res.getColor(R.color.expandable_bottom);
+                        mIsExpanded = mIsExpanded ? false : true;
+                        if (mIsExpanded) {
+                            fixedView.setBackgroundColor(topColor);
+                            expandableView.setBackgroundColor(bottomColor);
+                        } else {
+                            fixedView.setBackgroundColor(0xffffffff);
+                            expandableView.setBackgroundColor(0xffffffff);
+                        }
+                    }
+                });
             }
             return view;
         }

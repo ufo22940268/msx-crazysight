@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.meishixing.crazysight.widget.ExpandableLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:id="@+id/expandable_toggle_button"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="6dip">
+    android:layout_height="fill_parent">
 
-    <LinearLayout 
+    <com.meishixing.crazysight.widget.ExpandableLayout 
+        android:id="@+id/expandable_toggle_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="6dip"
         >
 
         <TextView 
@@ -57,14 +57,15 @@
             android:text="景点到付"
             />
 
-    </LinearLayout>
+    </com.meishixing.crazysight.widget.ExpandableLayout>
 
     <LinearLayout 
         android:id="@+id/expandable"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
+        android:paddingTop="10dip"
         android:orientation="vertical"
+        android:padding="6dip"
         >
 
         <TextView 
@@ -98,4 +99,4 @@
     
     </LinearLayout>
 
-</LinearLayout>
+</com.meishixing.crazysight.widget.ExpandableLayout>

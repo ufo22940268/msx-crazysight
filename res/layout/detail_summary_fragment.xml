@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="景点简介"
+            android:textColor="@android:color/white"
+            android:background="@color/blue"
+            android:padding="6dip"
+            />
+
+        <TextView 
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="6dip"
+            android:text="雁荡山位于浙江省温州市东北部海滨，是中国十大名山之一。雁荡山风景区主要指温州乐清市境内的北雁荡山。因“山顶有湖，芦苇丛生，秋雁宿之”而得名。山水奇秀，天开图画，以峰、瀑、洞、嶂见长。1982年被国务院列为首批国家重点风景名胜区。2005年2月被联合国教科文组织列为世界地质公园。"
+            />
+    
+        <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="景点交通"
+            android:textColor="@android:color/white"
+            android:background="@color/blue"
+            android:padding="6dip"
+            />
+
+        <TextView 
+            android:id="@+id/traffic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="6dip"
+            android:text="雁荡山系绵延数百公里，按地理位置不同可分为北雁荡山、中雁荡山、南雁荡山、西雁荡山（泽雅）、东雁荡山（洞头半屏山），通常所说的雁荡山风景区主要是指乐清市境内的北雁荡山。"
+            />
+
+    </LinearLayout>
+
+</ScrollView>

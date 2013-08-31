@@ -123,6 +123,8 @@ public class SightDetailActivity extends FragmentActivity {
         public Fragment getItem(int position) {
             if (position == 0) {
                 return new TicketFragment();
+            } else if (position  == 1) {
+                return new DetailSummaryFragment();
             } else {
                 return ContentFragment.newInstance(position);
             }

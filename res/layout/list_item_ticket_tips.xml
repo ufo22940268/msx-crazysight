@@ -3,12 +3,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="6dip"
-    android:id="@+id/expandable_toggle_button">
+    >
 
-    <RelativeLayout
+    <com.meishixing.crazysight.widget.NoExpandableLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        >
+        android:id="@+id/expandable_toggle_button">
 
         <TextView 
             android:id="@+id/tip"
@@ -18,7 +18,7 @@
             android:text="友情提示：如需预定，请......"
             />
 
-    </RelativeLayout>
+    </com.meishixing.crazysight.widget.NoExpandableLayout>
 
     <LinearLayout
         android:id="@+id/expandable"
