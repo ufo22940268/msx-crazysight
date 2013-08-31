@@ -38,7 +38,7 @@ public final class TicketFragment extends Fragment {
     public class TicketAdapter extends BaseAdapter {
 
         private int TYPE_TEL = 0;
-        private int TYPE_CONSULT = 1;
+        private int TYPE_TIPS = 1;
         private int TYPE_TICKET = 2;
 
         public int getCount() {
@@ -58,14 +58,13 @@ public final class TicketFragment extends Fragment {
             int type = getItemViewType(position);
             LayoutInflater inflater = LayoutInflater.from(getActivity());
             if (view == null) {
-                //if (type <= 1) {
-                    //TextView tv = new TextView(getActivity());
-                    //tv.setText(type + "");
-                    //view = tv;
-                //} else {
-                    //view = inflater.inflate(R.layout.list_item_ticket, parent, false);
-                //}
-                view = inflater.inflate(R.layout.list_item_ticket, parent, false);
+                if (type == TYPE_TEL) {
+                    view = inflater.inflate(R.layout.list_item_ticket_tel, parent, false);
+                } else if (type == TYPE_TIPS) {
+                    view = inflater.inflate(R.layout.list_item_ticket_tips, parent, false);
+                } else {
+                    view = inflater.inflate(R.layout.list_item_ticket, parent, false);
+                }
             }
             return view;
         }
