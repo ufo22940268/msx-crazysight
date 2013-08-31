@@ -70,6 +70,7 @@ public class SightDetailActivity extends FragmentActivity {
         ((TextView)findViewById(R.id.title)).setText(t);
     }
 
+    //Slidable frame fragment.
     private class CircleFrameAdapter extends FragmentPagerAdapter implements IconPagerAdapter {
         protected final int[] ICONS = new int[] {
             R.drawable.perm_group_calendar,
@@ -112,6 +113,7 @@ public class SightDetailActivity extends FragmentActivity {
         }
     }
 
+    //Content fragment. Used to display ticket, summary and nearby restarant.
     private class ContentAdapter extends FragmentPagerAdapter {
         public ContentAdapter(FragmentManager fm) {
             super(fm);
