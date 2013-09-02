@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!doctype html>
+<html>
+	<head>
+	<meta charset="utf-8" />
+	<title></title>
+	 <meta content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" name="viewport" /> <meta content="initial-scale=1.0,user-scalable=no,maximum-scale=1" media="(device-height: 568px)" name="viewport" /> <meta content="yes" name="apple-mobile-web-app-capable" /> <meta content="black" name="apple-mobile-web-app-status-bar-style" /> <meta content="telephone=no" name="format-detection" />
+	
+	<link href="css/common.css"  rel="stylesheet" type="text/css">
+	</head>
+	<body class="bg-color-1 home">
+		<div class="wrapper">
+			<div id="hd">
+				<h2>活动</h2>
+			</div>
+			<div id="bd">
+				<div class="box-area">
+					<div class="hd">疯狂景点</div>
+					<div class="bd">
+						<a href="#" id="start-btn" class="start-btn"><img width="116" height="122" src="img/start_btn.png"></a>
+						开动脑筋,根据图片找到景点名称<br/>考验自己的知识面,挑战自己和好友
+					</div>
+					
+				</div>
+			</div>
+			<div id="ft">
+			</div>
+		</div>
+        <script src="js/zepto.min.js"></script>
+        <script>
+            var hash = '';
+            
+            $('#start-btn').on('click',function(){
+                               
+               if(localStorage.getItem('quzzFinish')){
+                               
+                    hash = 'success.html';
+               }
+                               
+               if(hash){
+                   
+                   window.location = window.location.host+window.location.pathname+'#'+hash;
+               }
+                               
+                
+                               
+            });
+           
+            setTimeout(function(){
+                     
+               if(document.title!=''){
+                       
+                   localStorage.setItem('session_id',document.title),
+                       
+                   $.ajax({
+                          
+                        'type':'GET',
+                        'url':'http://api.online.travel.meishixing.com/game/crazysight/myunpass/session_id='+localStorage.getItem('session_id'),
+                        'dataType':'json',
+                        'success':function(data){
+                          if(data.result.length ==0 || localStorage.getItem('currentIndex') === data.result.length){
+                          
+                              hash = 'success.html';
+                          
+                          }else{
+                          
+                              hash = 'detail.html';
+                          
+                          }
+                          
+                          
+                          
+                          
+//                            alert(data.result);
+                            localStorage.setItem('myunpass_question',JSON.stringify(data.result));
+                          
+//                          alert(localStorage.getItem('myunpass_question'));
+                          
+                          if(!localStorage.getItem('currentIndex')){
+                               localStorage.setItem('currentIndex',0);
+                          }
+                          
+                          
+                        }
+                   });
+               }
+                       
+            },500);
+        </script>
+	</body>
+</html>

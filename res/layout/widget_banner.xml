@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:my="http://schemas.android.com/apk/com.meishixing.crazysight.widget"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/blue"
+    >
+
+    <com.meishixing.crazysight.widget.BannerItem 
+        android:id="@+id/item_nearby"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:src="@drawable/tab_nearby"
+            />
+
+        <TextView 
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="周边景点"
+            android:textColor="@color/item_text"
+            />
+
+    </com.meishixing.crazysight.widget.BannerItem>
+    
+    <com.meishixing.crazysight.widget.BannerItem 
+        android:id="@+id/item_where_to_go"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:src="@drawable/tab_where_to_go"
+            />
+
+        <TextView 
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="去哪儿"
+            android:textColor="@color/item_text"
+            />
+
+    </com.meishixing.crazysight.widget.BannerItem>
+    
+    <com.meishixing.crazysight.widget.BannerItem 
+        android:id="@+id/item_profile"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:src="@drawable/tab_profile"
+            />
+
+        <TextView 
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的"
+            android:textColor="@color/item_text"
+            />
+
+    </com.meishixing.crazysight.widget.BannerItem>
+    
+</LinearLayout>

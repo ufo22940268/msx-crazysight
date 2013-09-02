@@ -2,6 +2,7 @@
 <resources>
     <color name="orange">#ff7f66</color>
     <color name="blue">#4dbdff</color>
+    <color name="dark_blue">#0087c7</color>
     <color name="green">#9fcb5b</color>
     <color name="msx_dialog_bg">#fff</color>
 

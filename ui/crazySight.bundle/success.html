@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!doctype html>
+<html>
+	<head>
+	<meta charset="utf-8" />
+	<title></title>
+	 <meta content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" name="viewport" /> <meta content="initial-scale=1.0,user-scalable=no,maximum-scale=1" media="(device-height: 568px)" name="viewport" /> <meta content="yes" name="apple-mobile-web-app-capable" /> <meta content="black" name="apple-mobile-web-app-status-bar-style" /> <meta content="telephone=no" name="format-detection" />
+	<script charset="utf-8" src="js/zepto.min.js"></script>
+	<link href="css/common.css"  rel="stylesheet" type="text/css">
+	</head>
+	<body class="finish-guess">
+		<div class="wrapper">
+			<div id="hd">
+				<h2>活动</h2>
+			</div>
+			<div id="bd">
+				<div class="well-done">
+					<div class="hd">恭喜您</div>
+					<div class="bd">
+						太帅了,您已经闯关成功!
+					</div>
+					
+				</div>
+			</div>
+			<div id="ft">
+				<div class="btn-area">
+					<a href="#back" class="back-btn">返回</a>
+                    <a href="#" onclick="window.localStorage.setItem('currentIndex',0);window.localStorage.setItem('quzzFinish','');window.location.href='detail.html';"  class="back-btn">再来一次</a>
+					<a onclick="window.location.href = '#shareApp';" href="#" class="share-btn">分享给好友</a>
+				</div>
+			</div>
+		</div>
+        <script>
+            window.localStorage.setItem('quzzFinish',1);
+        </script>
+	</body>
+</html>

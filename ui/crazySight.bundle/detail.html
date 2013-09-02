@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!doctype html>
+<html>
+
+	<head>
+	<meta charset="utf-8" />
+	<title></title>
+	 <meta content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" name="viewport" /> <meta content="initial-scale=1.0,user-scalable=no,maximum-scale=1" media="(device-height: 568px)" name="viewport" /> <meta content="yes" name="apple-mobile-web-app-capable" /> <meta content="black" name="apple-mobile-web-app-status-bar-style" /> <meta content="telephone=no" name="format-detection" />
+	
+	<link href="css/common.css"  rel="stylesheet" type="text/css">
+	</head>
+	<body class="bg-color-2 detail">
+    
+		<div id="hd">
+            <a class="back_home" href="#back"><img src="img/back_icon.png"></a>
+			<h2>第<span id="number-of-sight"></span>关</h2>
+			<a href="#" title="增加金币" class="get-more-golden" id="get-more-golden"></a>
+		</div>
+		<div id="bd">
+			<div class="hd clearfix">
+				<div class="col-left">
+					<a href=""><img height="65" width="51" id="remove-one-word"  src="img/sub_one_error@2x.png" alt="去掉错误30"></a>
+					<a href=""><img height="65" width="51" id="one-word-tip"  src="img/tip_icon@2x.png" alt="提示"></a>
+				</div>
+				<div class="col-main">
+					<img id="image-view" class="image-view" width="172" height="172" >
+				</div>
+				<div class="col-right">
+					<a id="help-btn" class="help-btn" href="#"><img height="65" width="51"  src="img/help_icon@2x.png" alt="场外求助"></a>
+				</div>
+			</div>
+			<div class="bd clearfix" id="fill-word-area">
+			</div>
+			<div class="ft clearfix" id="tip-word-area">
+			</div>
+		</div>
+		<div id="ft">
+		</div>
+        <script charset="utf-8" src="js/zepto.min.js"></script>
+		
+		<script>
+
+		// var questions1 =  [ { "answer": "\u6d59\u6c5f", "image_url": "http://crazy-sight.b0.upaiyun.com/image/points_1.jpg", "id": 1, "suggest_words": "\u6e14,\u6751,\u6d59,\u59ec,\u9e1f,\u5916,\u5b98,\u5ca9,\u6a80,\u8fde,\u6eaa,\u5c71,\u686b,\u6842,\u9c81,\u5d02,\u6865,\u6c5f,\u5468,\u6ee9" }, { "answer": "\u897f\u6e56", "image_url": "http://crazy-sight.b0.upaiyun.com/image/points_2.jpg", "id": 2, "suggest_words": "\u897f,\u4e4c,\u94f6,\u6e56,\u9274,\u56ed,\u6a80,\u5cf0,\u8a79,\u6c34,\u6e56,\u9c81,\u9526,\u6cc9,\u5c9b,\u5de8,\u5b9a,\u5c71,\u73cf,\u5448" }, { "answer": "\u9ec4\u5c71", "image_url": "http://crazy-sight.b0.upaiyun.com/image/points_3.jpg", "id": 3, "suggest_words": "\u6c5f,\u5750,\u5cf0,\u6c82,\u5c71,\u5c27,\u9a7c,\u8336,\u6cc9,\u6ee9,\u4f57,\u6500,\u6865,\u5ca9,\u5b8b,\u9ec4,\u6a80,\u67ab,\u79c0,\u5cc4" }, { "answer": "\u4e3d\u6c5f", "image_url": "http://crazy-sight.b0.upaiyun.com/image/points_4.jpg", "id": 4, "suggest_words": "\u9547,\u5b98,\u5d02,\u59b9,\u67ab,\u5c9b,\u5750,\u94f6,\u5c71,\u4f57,\u4e3d,\u5cf0,\u9c81,\u5c3c,\u6ee9,\u6e56,\u9526,\u6c5f,\u6cf0,\u9274" }, { "answer": "\u5929\u5b89\u95e8", "image_url": "http://crazy-sight.b0.upaiyun.com/image/points_5.jpg", "id": 5, "suggest_words": "\u767d,\u94f6,\u95e8,\u5e99,\u6241,\u84c9,\u56ed,\u5b9d,\u6751,\u6e38,\u9e4a,\u697c,\u5dde,\u62db,\u5929,\u8857,\u5b89,\u5d16,\u9e64,\u95e8" }];
+
+		$(function(){
+
+			var Golden_Key = 'golden_count';
+
+			var localStorage = window.localStorage;
+            // 提示标志位 控制 错误颜色
+            var flag = true;
+
+			if(!localStorage)
+				return;
+			if(localStorage.getItem('golden_count')==null){
+				localStorage.setItem('golden_count',50);
+				$('#get-more-golden').text(50);
+			}
+
+			window.questions = $.parseJSON(localStorage.getItem('myunpass_question'));
+//          alert(localStorage.getItem('myunpass_question'));
+
+			$('#get-more-golden').text(localStorage.getItem(Golden_Key));
+
+			
+
+		
+		;(function(question){
+            var startTime = new Date();
+			var answer = question.answer;
+			var length = answer.length;
+			var words=[];
+			var seletedIndexs = [];
+			var lengthOfFilled=0;
+			var selectedClassName = 'word-be-selected';
+			var $tipWordArea = $('#tip-word-area');
+          
+            var ERRORTIPSClASS = 'error-tips';
+          
+          
+            //help
+          $('#help-btn').on('click',function(event){
+//                event.preventDefault();
+                Sight.shareThisSight();
+          });
+          $('#get-more-golden').on('click',function(event){
+               Sight.toDownloadList();
+          });
+			//监测答案
+			function check_word_correct(){
+				if(answer==words.join('')){
+          
+          
+                  var successDialog  = window.Dialog('successDialog',
+                            {
+                                                     leftBtnEvent:function(obj){
+                                                     
+                                                        Sight.shareThisSight();
+                                                     },
+                                                     rightBtnEvent:function(obj){
+                                                     addGolden(5);
+                                                     if((localStorage.getItem('currentIndex'))==questions.length){
+                                                        window.location.href = 'success.html';
+                                                     }else{
+//                                                        window.location.reload();
+                                                        
+                                                        window.location.href = 'detail.html';
+                                                     }
+                                                     
+                                                     
+                                                     },
+                                                     leftBtnText:"分享",
+                                                     rightBtnText:"下一关"
+                                                     }
+                            );
+                  successDialog.head('恭喜过关');
+          
+                  successDialog.body(' ');
+                  localStorage.setItem('currentIndex',localStorage.getItem('currentIndex')-0+1);
+                  successDialog.show();
+          
+         
+                  
+                   
+                   
+
+				}else{
+                    //如果没有flag false就可以
+                    flag && $('#fill-word-area').addClass(ERRORTIPSClASS);
+				}
+			}
+
+			 function renderQuestionHtml(question){
+		           
+	           var suggest_words = question.suggest_words.split(',');
+
+	           var filledContainsHTML = '';
+	           var filledArray = [];
+	           filledArray.length = question.answer.length;
+
+
+	           $.each(filledArray,function(index){
+	           		filledContainsHTML += '<span data-index='+index+'></span>';
+	           });
+
+
+	           $('#fill-word-area').append(filledContainsHTML);
+               $('#number-of-sight').text(question.id);
+	           
+	           $('<span>'+suggest_words.join('</span><span>')+'</span>').appendTo('#tip-word-area');
+
+               $('#image-view').attr('src',question.image_url);
+               $('#image-view').on('load',function(){
+//                    alert(222);
+                   setTimeout(function(){
+                              
+                              window.location = window.location.host+window.location.pathname+'#capture';
+                    },200);
+               });
+
+
+	        }
+
+	        renderQuestionHtml(question);
+
+			//可选字区域事件添加
+			$tipWordArea.on('click','span',function(event){
+				var $current = $(this);
+
+
+				if(lengthOfFilled<length&& !$current.hasClass(selectedClassName)){
+					$current.toggleClass(selectedClassName);
+
+
+					// alert($('#fill-word-area').find('span:not(filled)'));
+
+					var currentIndex = $('#fill-word-area').find('span:not(.filled)').eq(0).attr('data-index');
+
+
+					words[currentIndex] = $current.text();
+					seletedIndexs[currentIndex] = $('#tip-word-area').find('span').index(this);
+					$('#fill-word-area').find('span').eq(currentIndex).text($current.text()).addClass('filled');
+
+					lengthOfFilled++;
+					if(lengthOfFilled >=length){
+                        setTimeout(function(){
+                           check_word_correct();
+                        },100);
+                    }else{
+                        $('#fill-word-area').removeClass(ERRORTIPSClASS);
+                    }
+                            
+                    if(!flag){
+                        flag = true;
+                        $('#fill-word-area').removeClass(ERRORTIPSClASS);
+                    }
+
+				}
+			});
+
+
+			var Sight = {
+				goldenCount:localStorage.getItem('golden_count'),
+                shareThisSight:function(){
+                    window.location = window.location.host+window.location.pathname+'#share';
+                },
+                toDownloadList:function(){
+                    
+                    window.location = window.location.host+window.location.pathname+'#download_list';
+                },
+				showGoldenNotEnough:function(){
+          
+          
+                      var notEnoughGoldenDialog  = window.Dialog('notEnoughGoldenDialog',
+                                         {
+                                             leftBtnEvent:function(obj){
+                                                 notEnoughGoldenDialog.hide();
+                                             },
+                                             rightBtnEvent:function(obj){
+                                                 
+                                                 window.location = window.location.host+window.location.pathname+'#download_list';
+                                                 notEnoughGoldenDialog.hide();
+                                                 
+                                             },
+                                             leftBtnText:"确定",
+                                             rightBtnText:"赚金币"
+                                        }
+                      );
+                      notEnoughGoldenDialog.head('很遗憾');
+                      notEnoughGoldenDialog.body('您的金币数目不够啦。<br/>可以赚积分来获得提示');
+                      notEnoughGoldenDialog.show();
+
+				},
+                checkGoldenEngouth:function(count){
+                    var self = this;
+          
+                    if(localStorage.getItem('golden_count')>=count){
+                        return true;
+                    }else{
+                        self.showGoldenNotEnough();
+                        return false;
+                    }
+                },
+
+				updateGolden:function(count){
+					this.goldenCount = count;
+					localStorage.setItem('golden_count',this.goldenCount);
+					$('#get-more-golden').text(this.goldenCount);
+				},
+
+				removeWordTips:function(){
+					if(localStorage.getItem('golden_count')>30){
+
+						
+
+						for(var i = 0;i<words.length; i++){
+
+							if(answer[i] != words[i]&& words[i]!=''){
+								break;
+							}
+						}
+
+						$('#fill-word-area').find('span').eq(i).trigger('click');
+
+						if(i<words.length){
+							this.updateGolden(localStorage.getItem('golden_count')-30);
+						}
+
+					}else{
+
+					}
+				},
+				showOneWord:function(){
+
+					if(localStorage.getItem('golden_count')>=90){
+						this.updateGolden(localStorage.getItem('golden_count')-90);
+						for(var i = 0;i<words.length; i++){
+
+							if(answer[i] != words[i]){
+								break;
+							}
+						}
+						
+          
+                        flag = false;
+						$('#fill-word-area').find('span').eq(i).trigger('click');
+
+						for(var j = 0; j<$tipWordArea.find('span').length; j++){
+
+							if($tipWordArea.find('span').eq(j).text() == answer[i]){
+
+								$tipWordArea.find('span').eq(j).trigger('click');
+								break;
+							}
+
+						}
+
+						// $tipWordArea.find('span').map(function(index,dom){
+
+						// 	if($(dom).text() == answer[i]){
+
+						// 		$tipWordArea.find('span').eq(index).trigger('click');
+						// 		// break;
+						// 	}
+
+						// });
+
+
+
+					}else{
+
+					}
+
+				}
+
+			}
+
+			var showOneWordTips;
+
+			$('#remove-one-word').click(function(e){
+
+				e.preventDefault();
+                                        
+				if(Sight.checkGoldenEngouth(30)){
+
+					var removeWordTips  = window.Dialog('removeWordTips',{
+						leftBtnEvent:function(obj){
+							Sight.removeWordTips.call(Sight);
+							// self.hide();
+							removeWordTips.hide();
+						},
+						rightBtnEvent:function(obj){
+							removeWordTips.hide();
+						},
+						leftBtnText:"确认",
+						rightBtnText:"取消"
+					});
+					removeWordTips.head('求助');
+					removeWordTips.body('去掉一个错误答案');
+                    removeWordTips.show();
+					
+
+                }
+
+				
+
+			});
+
+			$('#one-word-tip').click(function(e){
+
+				e.preventDefault();
+				if(Sight.checkGoldenEngouth(90)){
+
+					var showOneWordTips  = window.Dialog('showOneWordTips',{
+						leftBtnEvent:function(obj){
+							Sight.showOneWord.call(Sight);
+							// self.hide();
+							showOneWordTips.hide();
+						},
+						rightBtnEvent:function(obj){
+							showOneWordTips.hide();
+						},
+						leftBtnText:"确认",
+						rightBtnText:"取消"
+					});
+					showOneWordTips.head('求助');
+					showOneWordTips.body('显示一个正确答案');
+					
+				}
+
+				showOneWordTips.show();
+
+			});
+
+			$('#fill-word-area').delegate('span','click',function(){
+				var $this = $(this);
+
+				var index = $this.attr('data-index');
+				if(words[index]){
+					$this.removeClass('filled');
+                    $('#fill-word-area').removeClass(ERRORTIPSClASS);
+					lengthOfFilled--;
+					$this.text('');
+					words[index] = '';
+					$tipWordArea.find('span').eq(seletedIndexs[index]).toggleClass(selectedClassName);
+				}
+
+				// $(this);
+			});
+
+		})(questions[localStorage.getItem('currentIndex')?localStorage.getItem('currentIndex'):0]);
+          
+		;(function(){
+
+			
+
+			function Dialog(config){
+				var self = this, cfg = self.config;
+
+
+				cfg = $.extend(
+					{
+						width:250,
+						id:'#tip-dialog',
+						mask:true,
+						leftBtnText:"确定",
+						rightBtnText:"取消",
+						leftBtnEvent:null,
+						rightBtnEvent:null
+
+					},config||{}
+				);
+				self.config = cfg;
+
+				self._createHTML();
+			}
+
+			Dialog.prototype = {
+
+
+				head:function(str){
+					var self = this,  cfg = self.config, elem = self.elem;	
+					elem.find('.hd').html(str);
+				},
+				body:function(str){
+					var self = this,  cfg = self.config, elem = self.elem;	
+					elem.find('.bd').html(str);
+				},
+				show:function(){
+
+					var self = this,  cfg = self.config, elem = self.elem;
+					elem.css({"visibility": "visible", "opacity": ""});
+
+					if(true === cfg.mask) {
+						self.mask.css({
+							"visibility": "visible"
+						});
+					}
+
+				},
+				hide:function(){
+					var self = this,  cfg = self.config, elem = self.elem;
+           
+
+		           // elem.animate({opacity: 0}, 300, function() {
+		                elem.css({"visibility": "hidden", "opacity": ""});
+		                if (cfg.mask) {
+		                    self.mask.css({"visibility": "hidden"});
+		                }
+		                // $(self).triggerHandler( EVENT_LIST.HIDE );
+		          //  });
+
+		            return self;
+				},
+				_center:function(){
+					
+		            var self = this, elem = self.elem, w = $(window),
+		                x = w.width(), y = w.height();
+
+		            elem.css( 'top', ( y - elem.height() ) / 2  );
+		            elem.css( 'left', ( x - elem.width() ) / 2 );
+
+		            //self.config.mask && self._isIE6 && self.mask.css('height', $(document).height());
+		            //$(self).triggerHandler( EVENT_LIST.CENTER );
+		            return self;
+        
+
+				},
+				_createHTML:function(){
+					var self = this,cfg= self.config;
+					var html = "<div class=\"tips-dialog\">\
+									<div class=\"hd\">\
+									</div>\
+									<div class=\"bd\">\
+									</div>\
+									<div class=\"ft\">\
+										<a href=\"#\" class=\"left-btn\"></a>\
+										<a href=\"#\" class=\"right-btn\"></a>\
+									</div>\
+								</div>";
+
+					var dialog = $(html);
+					
+					dialog.css({"visibility": "hidden", "width": cfg.width});
+					// dialog.find('.ft a').on('click',function(){
+					// 	self.hide();
+					// });
+					// 
+					cfg.leftBtnEvent&&dialog.on('leftBtnClick',cfg.leftBtnEvent);
+					cfg.rightBtnEvent&&dialog.on('rightBtnClick',cfg.rightBtnEvent);
+
+					dialog.find('.left-btn').on('click',function(){
+						// cfg.leftBtnEvent.call(self);
+						dialog.triggerHandler('leftBtnClick');
+					}).text(cfg.leftBtnText);
+					dialog.find('.right-btn').on('click',function(){
+						dialog.triggerHandler('rightBtnClick');
+
+					}).text(cfg.rightBtnText);
+
+					$('body').append(dialog);
+
+			
+
+					// 初始化遮罩层
+					if(true === cfg.mask) {
+						//var mask = $('mask');
+						var mask = $('<div id="'+ cfg.id +'_mask" class="dialog-mask"></div>');
+						mask.css({
+							"visibility": "hidden"
+						});
+						self.mask = mask;
+						$('body').append(mask);
+					}
+
+					self.elem = dialog;
+
+					self._center();
+
+
+				}
+
+			};
+
+			var _list = {};
+
+			window.Dialog  = function(id,config){
+
+				if(!_list[id]){
+					var D = new Dialog(config);	
+					_list[id] = D;
+				}
+				return _list[id];
+			};
+
+
+		})();
+
+//		$(function(){
+//			var successDialog  = window.Dialog('successDialog',{
+//				leftBtnEvent:function(obj){
+//					alert('leftBtnEvent');
+//					// self.hide();
+//				},
+//				rightBtnEvent:function(obj){
+//					alert('rightBtnEvent');
+//				},
+//				leftBtnText:"分享",
+//				rightBtnText:"下一关"
+//			});
+//			successDialog.head('恭喜过关');
+//			successDialog.body('你击败了3%的人');
+//			//dialog.show();
+//		});
+
+
+    });
+            
+            function addGolden(count){
+                
+                var Golden_Key = 'golden_count';
+                
+                count = count||30;
+                
+                localStorage.setItem(Golden_Key,localStorage.getItem(Golden_Key)-0+count);
+                $('#get-more-golden').text(localStorage.getItem(Golden_Key));
+            }
+		
+            $(window).on('load',function(){
+                        
+                setTimeout(function(){
+                            
+                    window.location = window.location.host+window.location.pathname+'#capture';
+                           
+                },200);
+            
+            });
+            
+
+		
+		</script>
+	</body>
+</html>
