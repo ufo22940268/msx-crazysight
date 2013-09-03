@@ -14,10 +14,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
 import com.loopj.android.http.*;
+import com.baidu.location.BDLocation;
 
 import java.util.*;
 
 import com.meishixing.crazysight.widget.*;
+import com.meishixing.crazysight.location.*;
 
 public class MainActivity extends FragmentActivity  {
 
@@ -26,10 +28,12 @@ public class MainActivity extends FragmentActivity  {
     private BannerItem mNearByBanner ;
     private BannerItem mWTOBanner    ;
     private BannerItem mProfileBanner;
+    protected BaiduLocationProxy mBaidu;
 
     @Override
     protected void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
+        mBaidu = new BaiduLocationProxy(this);
         AsyncHttpClient client = new AsyncHttpClient();
         setContentView(R.layout.main);
 
@@ -42,6 +46,17 @@ public class MainActivity extends FragmentActivity  {
         click(R.id.item_where_to_go,   new   WhereToGoFragment());
         click(R.id.item_profile,       new   ProfileFragment());
         replace(new NearByFragment());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mBaidu.startListening(new MSXLocationListener() {
+            @Override
+            public void onLocationChanged(BDLocation location) {
+                System.out.println("++++++++++++++++++++location:" + location + "++++++++++++++++++++");
+            }
+        });
     }
 
     private void findViews() {

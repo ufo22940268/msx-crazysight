@@ -5,6 +5,21 @@
     android:versionName="1.0">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 访问权限 -->
+    <!-- 允许一个程序访问精良位置(GPS) -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 允许一个程序访问CellID或WiFi热点来获取粗略的位置 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 允许程序打开network sockets -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 允许程序访问有关GSM网络信息 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 允许程序访问Wi-Fi网络状态信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- write to external storage -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="16" />
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher"
         android:name=".CrazySightApplication">
@@ -22,5 +37,12 @@
             android:theme="@style/Theme.Light.NoTitleBar.PageIndicatorDefaults"
             android:label="@string/app_name">
         </activity>
+
+        <!-- baidu loc 	start -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+        <!-- baidu loc  end -->
     </application>
 </manifest>

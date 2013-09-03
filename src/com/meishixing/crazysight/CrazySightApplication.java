@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import com.novoda.imageloader.core.ImageManager;
 import com.novoda.imageloader.core.LoaderSettings.SettingsBuilder;
 import com.novoda.imageloader.core.cache.LruBitmapCache;
+import com.baidu.location.BDLocation;
 
 import java.util.*;
 
@@ -22,6 +23,7 @@ public class CrazySightApplication extends Application
 {
 
     private static ImageManager mImageManager;
+    public static BDLocation mBaiduLocation;
 
     @Override
     public void onCreate() {

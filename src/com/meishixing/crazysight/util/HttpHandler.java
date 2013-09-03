@@ -18,9 +18,11 @@ import com.loopj.android.http.*;
 import org.json.*;
 
 public class HttpHandler {
+    static public final String TAG = "HttpHandler";
     public static void  getResult(String url, RequestParams params, final ResponseHandler handler) {
         AsyncHttpClient client = new AsyncHttpClient();
         url = "http://api.debug.online.travel.meishixing.com/" + url;
+        Log.d(TAG, url);
         client.get(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(String response) {

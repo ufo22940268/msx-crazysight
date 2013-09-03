@@ -22,14 +22,15 @@
         android:layout_marginLeft="10dip"
         android:orientation="vertical"
         android:layout_toRightOf="@id/photo"
+        android:layout_toLeftOf="@id/right"
         >
 
         <TextView 
             android:id="@+id/scenary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             style="@android:style/TextAppearance.Medium"
-            android:text="海洋世界"
             />
 
         <TextView 
@@ -53,6 +54,7 @@
     </LinearLayout>
 
     <LinearLayout 
+        android:id="@id/right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

@@ -18,6 +18,14 @@ import java.util.*;
 import android.support.v4.app.Fragment;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.meishixing.crazysight.model.*;
+import com.meishixing.crazysight.util.*;
+import com.loopj.android.http.*;
+import org.json.*;
+import com.meishixing.crazysight.util.*;
+import com.meishixing.crazysight.util.ReceiverManager.OnReceiveListener;
+import com.meishixing.crazysight.location.*;
+import com.meishixing.crazysight.util.HttpHandler.ResponseHandler;
+import com.baidu.location.BDLocation;
 
 public class NearByFragment extends BaseFragment {
 
@@ -38,8 +46,50 @@ public class NearByFragment extends BaseFragment {
         mListView = mFakeListView.getRefreshableView();
         mAdapter = new SightAdapter(getActivity());
         mListView.setAdapter(mAdapter);
+        mReceiverManager.registerReceiver(ReceiverManager.ACTION_LOCATION_CHANGED);
+        mReceiverManager.setOnReceiveListener(new OnReceiveListener() {
+            @Override
+            public void onReceive(Intent intent) {
+                loadSights();
+            }
+        });
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadSights();
+    }
+
+    private void loadSights() {
+        BDLocation loc = getBaiduLocation();
+        System.out.println("++++++++++++++++++++loc:" + loc + "++++++++++++++++++++");
+        if (loc == null) {
+            return;
+        }
+
+        RequestParams params = new RequestParams();
+        params.put("lat", String.valueOf(loc.getLatitude()));
+        params.put("lng", String.valueOf(loc.getLongitude()));
+        params.put("coord_type", "4");
+        AsyncHttpClient client = new AsyncHttpClient();
+        HttpHandler.getResult("sight/list/nearby/", params, new ResponseHandler() {
+            @Override
+            public void onSuccess(String resp) {
+                final List<Sight> sights = PojoParser.parseSights(resp);
+                getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mAdapter.setSights(sights);
+                            }
+                        }
+                );
+                
+            }
+        });
+    }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -53,20 +103,20 @@ public class NearByFragment extends BaseFragment {
 
         public SightAdapter(Context context) {
             mContext = context;
-            Sight s1 = new Sight();
-            s1.imgPath = "2011/08/23/2/2011082316175969439.jpg";
-            s1.sceneryName = "阿斯蒂芬";
-            s1.amount = 40;
-            s1.adviceAmount = 20;
+            //Sight s1 = new Sight();
+            //s1.imgPath = "2011/08/23/2/2011082316175969439.jpg";
+            //s1.sceneryName = "阿斯蒂芬";
+            //s1.amount = 40;
+            //s1.adviceAmount = 20;
 
-            Sight s2= new Sight();
-            s2.imgPath = "2011/08/23/2/2011082316175969439.jpg";
-            s2.sceneryName = "阿斯蒂芬";
-            s2.amount = 40;
-            s2.adviceAmount = 20;
+            //Sight s2= new Sight();
+            //s2.imgPath = "2011/08/23/2/2011082316175969439.jpg";
+            //s2.sceneryName = "阿斯蒂芬";
+            //s2.amount = 40;
+            //s2.adviceAmount = 20;
 
-            sights.add(s1);
-            sights.add(s2);
+            //sights.add(s1);
+            //sights.add(s2);
         }
 
         public int getCount() {
@@ -75,6 +125,11 @@ public class NearByFragment extends BaseFragment {
     
         public Object getItem(int position) {
             return sights.get(position);
+        }
+
+        public void setSights(List<Sight> sights) {
+            this.sights = sights;
+            notifyDataSetChanged();
         }
     
         public long getItemId(int position) {
@@ -89,6 +144,9 @@ public class NearByFragment extends BaseFragment {
                 holder.photo = (ImageView)view.findViewById(R.id.photo);
                 holder.amount = (TextView)view.findViewById(R.id.amount);
                 holder.adviceAmount = (TextView)view.findViewById(R.id.advice_amount);
+                holder.distance = (TextView)view.findViewById(R.id.distance);
+                holder.scenary = (TextView)view.findViewById(R.id.scenary);
+                holder.rate = (TextView)view.findViewById(R.id.rate);
                 view.setTag(holder);
             }
 
@@ -114,14 +172,20 @@ public class NearByFragment extends BaseFragment {
             span.setSpan(new StrikethroughSpan(), 0, amount.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             holder.amount.setText(span);
 
+            holder.distance.setText("距离" + s.getDistance() + "公里");
+            holder.scenary.setText(s.sceneryName);
+            holder.rate.setText(s.gradeId);
+
             return view;
         }
 
         public class ViewHolder {
             public ImageView photo;
-            public TextView scenery;
+            public TextView scenary;
             public TextView amount;
             public TextView adviceAmount;
+            public TextView distance;
+            public TextView rate;
         }
 
     }  

@@ -29,14 +29,27 @@ public class Sight {
     public String themeName;
     public String sceneryName;
     public String imgPath;
+    public String gradeId;
     public float amount;
     public float adviceAmount;
+
+    //Unit is meter.
+    public float distance;
 
     public String getRealImage() {
         if (imgPath != null) {
             return "http://upload.17u.com/uploadfile/scenerypic_common/" + "300_225/" + imgPath;
         } else {
             return null;
+        }
+    }
+
+    public String getDistance() {
+        float d = distance/1000;
+        if (d > 1) {
+            return String.valueOf((int)d);
+        } else {
+            return String.valueOf(String.format("%.1f", d));
         }
     }
 
