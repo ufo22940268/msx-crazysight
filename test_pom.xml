@@ -17,6 +17,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>
             <version>4.1.1.4</version>
@@ -38,39 +43,31 @@
         </dependency>
 
         <dependency>
+            <groupId>org.robolectric</groupId>
+            <artifactId>robolectric</artifactId>
+            <version>${robolectric.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup</groupId>
+            <artifactId>fest-android</artifactId>
+            <version>${fest-assert.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.meishixing</groupId>
             <artifactId>android-async-http</artifactId>
             <version>1.4.2</version>
             <type>jar</type>
         </dependency>
-
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.2.4</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.chrisbanes.pulltorefresh</groupId>
-            <artifactId>library</artifactId>
-            <version>2.1.1</version>
-            <type>apklib</type>
-        </dependency>
-        <dependency>
-            <groupId>com.novoda.imageloader</groupId>
-            <artifactId>imageloader-core</artifactId>
-            <version>1.5.8</version>
+            <groupId>com.koushikdutta.ion</groupId>
+            <artifactId>ion</artifactId>
+            <version>1.1.5</version>
         </dependency>
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
         <sourceDirectory>src</sourceDirectory>
+        <testSourceDirectory>test</testSourceDirectory>
         <pluginManagement>
             <plugins>
                 <plugin>

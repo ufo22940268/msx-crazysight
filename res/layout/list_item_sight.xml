@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingTop="10dip"
+    android:paddingBottom="10dip"
+    android:paddingLeft="20dip"
+    android:paddingRight="20dip"
+    >
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="80dip"
+        android:layout_height="60dip"
+        android:layout_centerVertical="true"
+        />
+
+    <LinearLayout 
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:orientation="vertical"
+        android:layout_toRightOf="@id/photo"
+        >
+
+        <TextView 
+            android:id="@+id/scenary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@android:style/TextAppearance.Medium"
+            android:text="海洋世界"
+            />
+
+        <TextView 
+            android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@android:style/TextAppearance.Small"
+            android:text="距离12公里"
+            />
+
+        <TextView 
+            android:id="@+id/rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+            style="@android:style/TextAppearance.Small"
+            android:text="AAAA"
+            />
+    
+    </LinearLayout>
+
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical"
+        android:gravity="center_horizontal|bottom"
+        >
+
+        <TextView 
+            android:id="@+id/advice_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView 
+            android:id="@+id/amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    
+    </LinearLayout>
+
+</RelativeLayout>

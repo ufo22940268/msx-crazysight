@@ -14,4 +14,5 @@
 
     <drawable name="blue">#4dbdff</drawable>
     <drawable name="dim_blue">#296388</drawable>
+    <drawable name="transparent">#00000000</drawable>
 </resources>

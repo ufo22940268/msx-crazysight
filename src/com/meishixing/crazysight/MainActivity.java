@@ -13,12 +13,15 @@ import android.view.animation.*;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
+import com.loopj.android.http.*;
 
 import java.util.*;
 
 import com.meishixing.crazysight.widget.*;
 
 public class MainActivity extends FragmentActivity  {
+
+    static public final boolean ONE_SHOT_MODE = false;
 
     private BannerItem mNearByBanner ;
     private BannerItem mWTOBanner    ;
@@ -27,7 +30,12 @@ public class MainActivity extends FragmentActivity  {
     @Override
     protected void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
-        setContentView(R.layout.near_by);
+        AsyncHttpClient client = new AsyncHttpClient();
+        setContentView(R.layout.main);
+
+        if (ONE_SHOT_MODE) {
+            Test.oneShot(this);
+        }
 
         findViews();
         click(R.id.item_nearby,        new   NearByFragment());

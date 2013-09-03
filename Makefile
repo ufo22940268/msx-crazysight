@@ -4,4 +4,4 @@ main:
 
 .PHONY : test
 test:
-	mvn test -f test_pom.xml -q
+	mvn test -q  -f test_pom.xml
